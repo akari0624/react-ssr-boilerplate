@@ -2,7 +2,12 @@
 bundle.js
 npm-debug.log
 .DS_Store
+.eslintrc
+.eslintrc.json
+.gitignore
+/builded/*
+/static/*
 
-# IntelliJ
+# IntelliJ 
 *.iml
 /.idea
