@@ -5,9 +5,9 @@ import { createStore, applyMiddleware } from 'redux';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import thunk from 'redux-thunk';
 
-import App from './components/app';
-import Signin from './components/auth/signin';
 import reducers from './reducers';
+import App from './components/app';
+import Page from './components/tv_page';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
@@ -24,7 +24,7 @@ hydrate(
             <div>
                 <Route path="/" component={App} />
                 <Switch>
-                    <Route path="/signin" component={Signin} />
+                    <Route path="/page" component={Page} />
                 </Switch>
             </div> 
         </BrowserRouter> 
