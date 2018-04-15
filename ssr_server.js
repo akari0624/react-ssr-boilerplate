@@ -94,18 +94,6 @@ try{
         console.log(`ssr server is up and listening port ${port}`);
         });
 
-    }else if(mode === 'dev'){
-
-        console.log('in development mode');
-        const webpackCompiler = Webpack(webpackDevConfig);
-        const app = new WebpackDevServer(webpackCompiler, webpackConfig.devServer);
-
-        setExpressMiddleware(app);
-
-        app.listen(port, '127.0.0.1', ()=>{
-        console.log(`webpack-dev-server is up and listening port ${port}`);
-        });
-
     }
 
 }catch(e){

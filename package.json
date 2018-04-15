@@ -10,8 +10,7 @@
     "test:watch": "npm run test -- --watch",
     "clear": "rimraf builded/*",
     "build": "npm run clear && webpack --config webpack.config.prod.js",
-    "ssr_prod": "npm run build &&cross-env NODE_ENV=prod babel-node  ssr_server.js",
-    "ssr_dev": "cross-env NODE_ENV=dev babel-node ssr_server.js"
+    "ssr_prod": "npm run build &&cross-env NODE_ENV=prod babel-node  ssr_server.js"
   },
   "author": "",
   "license": "ISC",
