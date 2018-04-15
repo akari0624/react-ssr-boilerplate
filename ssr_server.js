@@ -5,12 +5,14 @@ import {createStore, applyMiddleware} from 'redux';
 import React from 'react';
 import reducers from './src/reducers';
 import thunk from 'redux-thunk';
+
+import Webpack from 'webpack';
+import WebpackDevServer from 'webpack-dev-server';
+import webpackDevConfig from './webpack.config.dev';
+
 import App from './src/components/app';
 import {renderToString} from 'react-dom/server';
 import {fetchTVMazeData} from './src/APICall/TVMazeApi';
-
-const app = express();
-const port = 9080;
 
 
 
@@ -61,18 +63,50 @@ const handleRender = (req, res) => {
 };
 
 
-try{
+const setExpressMiddleware = (app) => {
+
     app.use(express.static('static'));
     app.use('/js', express.static('builded'));
-
-
-
     app.use(handleRender);
 
-    app.listen(port,()=>{
+};
 
-    console.log(`ssr server is up and listening port ${port}`);
-    });
+
+
+const port = process.env.PORT || 3000;
+
+try{
+
+    const mode = process.env.NODE_ENV
+
+    console.log('node_env:',mode);
+
+    if(mode === 'prod'){
+        
+        console.log('in production mode');
+        const app = express();
+      
+        setExpressMiddleware(app);
+
+
+        app.listen(port,()=>{
+
+        console.log(`ssr server is up and listening port ${port}`);
+        });
+
+    }else if(mode === 'dev'){
+
+        console.log('in development mode');
+        const webpackCompiler = Webpack(webpackDevConfig);
+        const app = new WebpackDevServer(webpackCompiler, webpackConfig.devServer);
+
+        setExpressMiddleware(app);
+
+        app.listen(port, '127.0.0.1', ()=>{
+        console.log(`webpack-dev-server is up and listening port ${port}`);
+        });
+
+    }
 
 }catch(e){
     console.error(`server start up error ${e}`);

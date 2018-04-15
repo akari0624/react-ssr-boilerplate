@@ -9,8 +9,9 @@
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
     "test:watch": "npm run test -- --watch",
     "clear": "rimraf builded/*",
-    "build": "npm run clear && webpack --config webpack.config.js",
-    "run_ssr": "npm run build && babel-node  ssr_server.js"
+    "build": "npm run clear && webpack --config webpack.config.prod.js",
+    "ssr_prod": "npm run build &&cross-env NODE_ENV=prod babel-node  ssr_server.js",
+    "ssr_dev": "cross-env NODE_ENV=dev babel-node ssr_server.js"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +25,7 @@
     "babel-preset-stage-1": "^6.24.1",
     "chai": "^3.5.0",
     "chai-jquery": "^2.0.0",
+    "cross-env": "^5.1.4",
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.7.0",
     "jquery": "^2.2.1",
