@@ -20,10 +20,10 @@ class TVMazeList extends Component{
 
     }
 
-    componentWillMount(){
-
-        this.props.getData();
-
+    componentDidMount(){
+        if(this.props.tvMazeData === []){
+            this.props.getData();
+        }
     }
 
 
