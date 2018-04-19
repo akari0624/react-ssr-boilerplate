@@ -7,7 +7,6 @@ npm-debug.log
 .gitignore
 /builded/*
 /static/*
-package-lock.json
 
 # IntelliJ 
 *.iml

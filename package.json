@@ -1,19 +1,18 @@
 {
-  "name": "redux-simple-starter",
+  "name": "react_ssr_boilerplate",
   "version": "1.0.0",
-  "description": "Simple starter package for Redux with React and Babel support",
-  "main": "index.js",
-  "repository": "git@github.com:StephenGrider/ReduxSimpleStarter.git",
+  "description": "",
+  "main": "ssr_server.js",
+  "repository": "",
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
-    "test:watch": "npm run test -- --watch",
     "clear": "rimraf builded/*",
     "build": "npm run clear && webpack --config webpack.config.prod.js",
     "ssr_prod": "npm run build &&cross-env NODE_ENV=prod babel-node  ssr_server.js"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -27,7 +26,7 @@
     "cross-env": "^5.1.4",
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.7.0",
-    "jquery": "^3.0.0",
+    "jquery": "^3.3.1",
     "jsdom": "^8.1.0",
     "mocha": "^2.4.5",
     "react-addons-test-utils": "^0.14.7",
