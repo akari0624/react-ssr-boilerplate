@@ -2,7 +2,7 @@
 
 ### feature
 - isomorphic / universal server side rendering
-- base on a express server
+- base on express
 - support hot reload in development mode (via webpack Hot Module Replacement)
 
 ### usage
