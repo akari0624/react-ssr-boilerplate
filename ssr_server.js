@@ -7,16 +7,23 @@ import reducers from './src/reducers';
 import thunk from 'redux-thunk';
 
 import Webpack from 'webpack';
-import WebpackDevServer from 'webpack-dev-server';
 import webpackDevConfig from './webpack.config.dev';
 
 import App from './src/components/app';
 import {renderToString} from 'react-dom/server';
 import {fetchTVMazeData} from './src/APICall/TVMazeApi';
 
+import {generateTempRouteWhenSSR} from './src/SSR_Util';
 
 
 const renderFullPage = (html, preloadedState) => {
+
+    const devScriptBundleIncludePath = '<script src="bundle.js"></script>';
+    const prodSeperatedBundleIncludePath = `<script src="/js/vendors~main.js"></script>
+    <script src="/js/main.js"></script>`;
+    
+     const whichToInclude = process.env.NODE_ENV === 'production' ? prodSeperatedBundleIncludePath : devScriptBundleIncludePath;
+
     return `
     <!doctype html>
     <html>
@@ -30,8 +37,8 @@ const renderFullPage = (html, preloadedState) => {
           // http://redux.js.org/recipes/ServerRendering.html#security-considerations
           window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
         </script>
-        <script src="/js/vendors~main.js"></script>
-        <script src="/js/main.js"></script>
+
+       ${whichToInclude}
       </body>
     </html>
     `;
@@ -49,7 +56,7 @@ const handleRender = (req, res) => {
          
         const html = renderToString(
             <Provider store={store}>
-                <App/> 
+                {generateTempRouteWhenSSR('/', App)}
             </Provider>
         );
     
@@ -63,13 +70,18 @@ const handleRender = (req, res) => {
 };
 
 
-const setExpressMiddleware = (app) => {
+const setServerStaticFileMiddleware = (app) => {
 
     app.use(express.static('static'));
     app.use('/js', express.static('builded'));
-    app.use(handleRender);
+  
 
 };
+
+const setExpressSSRFirstRouteMiddleware = (app) => {
+
+    app.use(handleRender);
+}
 
 
 
@@ -77,34 +89,48 @@ const port = process.env.PORT || 3000;
 
 try{
 
-    const mode = process.env.NODE_ENV
+    const mode = process.env.NODE_ENV;
 
     console.log('node_env:',mode);
 
-    if(mode === 'prod'){
+    if(mode === 'production'){
         
         console.log('in production mode');
         const app = express();
       
-        setExpressMiddleware(app);
+        setServerStaticFileMiddleware(app);
+        setExpressSSRFirstRouteMiddleware(app);
 
 
         app.listen(port,()=>{
 
-        console.log(`ssr server is up and listening port ${port}`);
+            console.log(`ssr server is up and listening port ${port}`);
         });
 
-    }else if(mode === 'dev'){
+    }else if(mode === 'development'){
 
         console.log('in development mode');
         const webpackCompiler = Webpack(webpackDevConfig);
-        const app = new WebpackDevServer(webpackCompiler, webpackConfig.devServer);
+       
 
-        setExpressMiddleware(app);
+        
+        const app = express();
+        app.use(require('webpack-dev-middleware')(webpackCompiler, {
+            hot:true
+        }));
+
+        app.use(require('webpack-hot-middleware')(webpackCompiler));
+            
+        app.use(express.static(path.resolve(__dirname, 'src')));
+        setExpressSSRFirstRouteMiddleware(app);
 
         app.listen(port, '127.0.0.1', ()=>{
-        console.log(`webpack-dev-server is up and listening port ${port}`);
+            console.log(`webpack-dev-server is up and listening port ${port}`);
         });
+
+        
+
+    
 
     }
 
