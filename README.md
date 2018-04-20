@@ -7,11 +7,11 @@
 
 ### usage
 ``` shell
-git checkout https://github.com/akari0624/react-ssr-boilerplate.git 
+git clone https://github.com/akari0624/react-ssr-boilerplate.git 
 ```
 
 ``` shell
-cd 
+cd react-ssr-boilerplate
 ```
 
 ``` shell
