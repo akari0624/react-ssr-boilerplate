@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import {Link} from 'react-router-dom';
 
 import {retrieveTVMazeData} from '../actions';
 
@@ -11,7 +12,7 @@ class TVMazeList extends Component{
         const liArr = data.map( d => {
             return (
                 <li key={d.show.id}>
-                    {d.show.name}
+                    <Link to={`/page/${d.show.id}`}>  {d.show.name+' ABCDE'} </Link>
                 </li>
             );
         });

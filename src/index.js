@@ -22,12 +22,22 @@ hydrate(
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
         <BrowserRouter>
             <div>
-                <Route path="/" component={App} />
                 <Switch>
-                    <Route path="/page" component={Page} />
+                    <Route path="/page/:id" component={Page} />
+                    <Route path="/" component={App} />
                 </Switch>
             </div> 
         </BrowserRouter> 
     </Provider>
 
     , document.querySelector('#root'));
+
+
+
+
+if(process.env.NODE_ENV === 'development' && module.hot) {
+    console.log('hot reload initializing....');
+
+    module.hot.accept();
+}
+
