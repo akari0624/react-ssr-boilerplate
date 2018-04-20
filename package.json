@@ -10,8 +10,8 @@
     "test:watch": "npm run test -- --watch",
     "clear": "rimraf builded/*",
     "build": "npm run clear && webpack --config webpack.config.prod.js",
-    "ssr_prod": "npm run build &&cross-env NODE_ENV=prod babel-node  ssr_server.js",
-    "ssr_dev": "cross-env NODE_ENV=dev babel-node ssr_server.js"
+    "ssr_prod": "npm run build &&cross-env NODE_ENV=production babel-node  ssr_server.js",
+    "ssr_dev": "cross-env NODE_ENV=development babel-node ssr_server.js"
   },
   "author": "",
   "license": "ISC",
@@ -28,14 +28,15 @@
     "cross-env": "^5.1.4",
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.7.0",
-    "jquery": "^2.2.1",
+    "jquery": "^3.3.1",
     "jsdom": "^8.1.0",
     "mocha": "^2.4.5",
     "react-addons-test-utils": "^0.14.7",
     "rimraf": "^2.6.2",
     "webpack": "^4.5.0",
     "webpack-cli": "^2.0.14",
-    "webpack-dev-server": "^3.1.3"
+    "webpack-dev-middleware": "^3.1.2",
+    "webpack-hot-middleware": "^2.22.1"
   },
   "dependencies": {
     "express": "^4.16.3",

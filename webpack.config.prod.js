@@ -10,12 +10,13 @@ module.exports = {
         filename: '[name].js',
         chunkFilename:'[name].js'
     },
+    mode: 'production',
     module: {
         rules: [
             {
                 use:'babel-loader',
                 test:/\.(js|jsx)$/,
-                exclude:/node_midules/
+                exclude:/node_modules/
             }
         ]
     },
@@ -28,10 +29,6 @@ module.exports = {
             chunks:'all'
         },
       
-    },
-    devServer: {
-        historyApiFallback: true,
-        contentBase: './'
     }
 };
 
