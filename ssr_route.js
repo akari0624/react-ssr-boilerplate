@@ -42,19 +42,22 @@ const renderFullPage = (html, preloadedState) => {
 };
 
 
+const applyMiddleWareThenCreateStoreByProvidingPreloadData  = (theReducers, preloadData) => applyMiddleware(thunk)(createStore)(theReducers, preloadData);
+
 
 const rootRoute = (req, res, next) => {
-
-    // see user request which route, then do correspontive thing
 
     const dataPromise = fetchTVMazeData(null);
 
     dataPromise.then(data => {
 
         const preloadedTVMazeData = {tvMazeData:data};
-        const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
-        const store = createStoreWithMiddleware(reducers,preloadedTVMazeData);
          
+        const store = applyMiddleWareThenCreateStoreByProvidingPreloadData(reducers,preloadedTVMazeData);
+        // the upper line is equal to :
+        // const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+        // const store = createStoreWithMiddleware(reducers,preloadedTVMazeData);
+
         const html = renderToString(
             <Provider store={store}>
                 {generateTempRouteWhenSSR('/', App)}
@@ -75,7 +78,7 @@ const rootRoute = (req, res, next) => {
 
 export default  (expressServer) => {
 
-
+    // see user request which route, then do corresponding thing
     expressServer.get('/',rootRoute);
 
 
