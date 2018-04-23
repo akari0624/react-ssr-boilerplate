@@ -12,7 +12,7 @@ class TVMazeList extends Component{
         const liArr = data.map( d => {
             return (
                 <li key={d.show.id}>
-                    <Link to={`/page/${d.show.id}`}>  {d.show.name+' ABCDE'} </Link>
+                    <Link to={`/page/${d.show.id}`}>  {d.show.name} </Link>
                 </li>
             );
         });
@@ -22,7 +22,7 @@ class TVMazeList extends Component{
     }
 
     componentDidMount(){
-        if(this.props.tvMazeData === []){
+        if(this.props.tvMazeData.length === 0){
             this.props.getData();
         }
     }

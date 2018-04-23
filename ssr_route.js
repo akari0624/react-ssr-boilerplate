@@ -5,9 +5,11 @@ import {createStore, applyMiddleware} from 'redux';
 import React from 'react';
 import reducers from './src/reducers';
 import thunk from 'redux-thunk';
+import TVPage from './src/components/tv_page';
 
 
-import {fetchTVMazeData} from './src/APICall/TVMazeApi';
+import {fetchTVMazeData, fetchOneShowDataById} from './src/APICall/TVMazeApi';
+
 
 import {generateTempRouteWhenSSR} from './src/SSR_Util';
 
@@ -15,7 +17,7 @@ import {generateTempRouteWhenSSR} from './src/SSR_Util';
 
 const renderFullPage = (html, preloadedState) => {
 
-    const devScriptBundleIncludePath = '<script src="bundle.js"></script>';
+    const devScriptBundleIncludePath = '<script src="/bundle.js"></script>';
     const prodSeperatedBundleIncludePath = `<script src="/js/vendors~main.js"></script>
     <script src="/js/main.js"></script>`;
     
@@ -75,11 +77,40 @@ const rootRoute = (req, res, next) => {
 
 
 
+const pageRoute = (req, res, next) => {
+
+    console.log('id: ', req.params.id);
+    const id = req.params.id;
+    const dataPromise = fetchOneShowDataById(id);
+
+    dataPromise.then(data => {
+
+         
+        const store = applyMiddleWareThenCreateStoreByProvidingPreloadData(reducers);
+ 
+        const html = renderToString(
+            <Provider store={store}>
+                <TVPage data={data} />
+            </Provider>
+        );
+    
+        const preloadedState = store.getState();
+        res.send(renderFullPage(html, preloadedState));
+
+
+    });
+
+    // {generateTempRouteWhenSSR('/page/:id', TVPage, data)}
+  
+};
+
+
+
 
 export default  (expressServer) => {
 
     // see user request which route, then do corresponding thing
     expressServer.get('/',rootRoute);
-
+    expressServer.get('/page/:id',pageRoute);
 
 };

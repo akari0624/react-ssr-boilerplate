@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 
 import reducers from './reducers';
 import App from './components/app';
-import Page from './components/tv_page';
+import ShowPage from './components/tv_page';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
@@ -23,7 +23,7 @@ hydrate(
         <BrowserRouter>
             <div>
                 <Switch>
-                    <Route path="/page/:id" component={Page} />
+                    <Route path="/page/:id" component={ShowPage} />
                     <Route path="/" component={App} />
                 </Switch>
             </div> 
@@ -36,8 +36,6 @@ hydrate(
 
 
 if(process.env.NODE_ENV === 'development' && module.hot) {
-    console.log('hot reload initializing....');
-
     module.hot.accept();
 }
 
