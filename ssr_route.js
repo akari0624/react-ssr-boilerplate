@@ -90,7 +90,7 @@ const pageRoute = (req, res, next) => {
  
         const html = renderToString(
             <Provider store={store}>
-                <TVPage data={data} />
+                {generateTempRouteWhenSSR('/page/:id', TVPage, data)}
             </Provider>
         );
     
