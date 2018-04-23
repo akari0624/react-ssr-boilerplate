@@ -2,8 +2,16 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Link} from 'react-router-dom';
+import Styled from 'styled-components';
 
 import {retrieveTVMazeData} from '../actions';
+
+
+const Styled_UL = Styled.ul`
+
+list-style-type:none;
+
+`;
 
 class TVMazeList extends Component{
 
@@ -32,9 +40,9 @@ class TVMazeList extends Component{
     render(){
         return (
             <div>
-                <ul>
+                <Styled_UL>
                     {this.renderDataList(this.props.tvMazeData)}
-                </ul>
+                </Styled_UL>
             </div>
         );
     }
