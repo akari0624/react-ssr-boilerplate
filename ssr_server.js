@@ -42,7 +42,8 @@ try{
       
         setServerStaticFileMiddleware(app);
         setExpressSSRFirstRouteMiddleware(app);
-
+        
+        app.disable('x-powered-by');
 
         app.listen(port,()=>{
 
