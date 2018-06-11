@@ -1,6 +1,10 @@
 const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const BABEL_Loaders = require('./webpack.config.commons').BABEL_Loaders;
+const  CSS_Loaders = require('./webpack.config.commons').CSS_Loaders;
+const  ASSET_Loaders = require('./webpack.config.commons').ASSET_Loaders;
 
+const LoaderModuleRulesArr = BABEL_Loaders.concat(CSS_Loaders, ASSET_Loaders);
 
 
 module.exports = {
@@ -12,13 +16,7 @@ module.exports = {
     },
     mode: 'production',
     module: {
-        rules: [
-            {
-                use:'babel-loader',
-                test:/\.(js|jsx)$/,
-                exclude:/node_modules/
-            }
-        ]
+        rules: LoaderModuleRulesArr
     },
     resolve: {
         extensions: ['.js', '.jsx']
