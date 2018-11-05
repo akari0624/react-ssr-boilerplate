@@ -1,8 +1,8 @@
 const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const BABEL_Loaders = require('./webpack.config.commons').BABEL_Loaders;
-const  CSS_Loaders = require('./webpack.config.commons').CSS_Loaders;
-const  ASSET_Loaders = require('./webpack.config.commons').ASSET_Loaders;
+const BABEL_Loaders = require('./webpack.config.base').BABEL_Loaders;
+const  CSS_Loaders = require('./webpack.config.base').CSS_Loaders;
+const  ASSET_Loaders = require('./webpack.config.base').ASSET_Loaders;
 
 const LoaderModuleRulesArr = BABEL_Loaders.concat(CSS_Loaders, ASSET_Loaders);
 
