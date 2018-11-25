@@ -60,7 +60,7 @@ function mapDispatchToProps(dispatch){
     return bindActionCreators({
         getData:retrieveTVMazeData
     }, dispatch);
-
+    
 }
 
 

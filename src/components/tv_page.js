@@ -7,7 +7,7 @@ export default class TVShowPage extends Component{
     constructor(props){
         super(props);
         this.state = {
-            data:this.props.data || {}
+            data: props.data || {}
         };
     }
 
@@ -28,7 +28,7 @@ export default class TVShowPage extends Component{
                     <button><Link to="/">back</Link></button>
                     <h1>{this.state.data.name}</h1>
                     <img src={this.state.data.image.medium} alt={this.state.data.name}/>
-                    <article>{this.state.data.summary}</article>
+                    <article dangerouslySetInnerHTML={{__html: this.state.data.summary}}></article>
                 </main>
             );
         }
