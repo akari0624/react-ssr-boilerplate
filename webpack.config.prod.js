@@ -8,7 +8,7 @@ const LoaderModuleRulesArr = BABEL_Loaders.concat(CSS_Loaders, ASSET_Loaders);
 
 
 module.exports = {
-    entry: ['babel-polyfill', './src/index.js'],
+    entry: ['@babel/polyfill', './src/index.js'],
     output: {
         path: path.resolve(__dirname, 'builded'),
         filename: '[name].js',

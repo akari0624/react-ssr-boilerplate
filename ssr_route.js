@@ -67,7 +67,9 @@ const rootRoute = (req, res, next) => {
         );
     
         const preloadedState = store.getState();
-        res.send(renderFullPage(html, preloadedState));
+        const finalPageRawHTML = renderFullPage(html, preloadedState)
+        console.log(finalPageRawHTML);
+        res.send(finalPageRawHTML);
 
 
     });

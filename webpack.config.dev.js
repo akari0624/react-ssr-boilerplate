@@ -4,7 +4,7 @@ const webpack = require('webpack');
 
 
 module.exports = {
-    entry: ['babel-polyfill','webpack-hot-middleware/client', './src/index.js'],
+    entry: ['@babel/polyfill','webpack-hot-middleware/client', './src/index.js'],
     output: {
         path: path.resolve(__dirname, 'src'),
         filename: 'bundle.js',
